@@ -5,8 +5,8 @@ import java.awt.Color;
 
 import javax.swing.*;
 
-public class BattleShipsFrame extends JFrame {
-	public BattleShipsFrame(){
+public class BattleShipsFram extends JFrame {
+	public BattleShipsFram(){
 		this.setTitle("Battle Ship");
 		this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		

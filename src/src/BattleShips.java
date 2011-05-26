@@ -13,7 +13,7 @@ public class BattleShips {
 		// TODO Auto-generated method stub
 		EventQueue.invokeLater(new Runnable(){
 			public void run(){
-				BattleShipsFrame frame = new BattleShipsFrame();
+				BattleShipsFram frame = new BattleShipsFram();
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
 			}
