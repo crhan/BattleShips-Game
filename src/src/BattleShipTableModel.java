@@ -11,6 +11,7 @@ import javax.swing.table.AbstractTableModel;
  * @author crhan
  *
  */
+@SuppressWarnings("serial")
 public class BattleShipTableModel extends AbstractTableModel {
 
 	public BattleShipTableModel(int _size){
@@ -34,14 +35,13 @@ public class BattleShipTableModel extends AbstractTableModel {
 	}
 
 	
-	public Class getColumnClass(int c){
-		//TODO 添加返回值
-		return cells[0][c].getClass();
+	public Class<Color> getColumnClass(int c){
+		return Color.class;
 	}
 	@Override
 	public Object getValueAt(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return null;
+		GridLocation g= (GridLocation)cells[arg0][arg1];
+		return g.getColor();
 	}
 	
 	public boolean inBounds(int x, int y){

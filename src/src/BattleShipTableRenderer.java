@@ -15,10 +15,9 @@ import javax.swing.table.TableCellRenderer;
  * @author crhan
  * 
  */
-public class BattleShipTableRenderer extends JPanel implements
-		TableCellRenderer {
-
-	private static final String UIManager = null;
+@SuppressWarnings("serial")
+public class BattleShipTableRenderer extends JPanel 
+		implements	TableCellRenderer {
 
 	/*
 	 * (non-Javadoc)
@@ -30,10 +29,8 @@ public class BattleShipTableRenderer extends JPanel implements
 	@Override
 	public Component getTableCellRendererComponent(JTable arg0, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
-		// TODO Auto-generated method stub
-		setBackground((Color) value);
-
-		return null;
+		this.setBackground((Color)value);
+		return this;
 	}
 
 }

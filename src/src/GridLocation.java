@@ -58,6 +58,6 @@ public class GridLocation {
 	private int x;
 	private int y;
 	private int type;
-	private boolean placeState;
+	private boolean placeState=true;
 
 }
