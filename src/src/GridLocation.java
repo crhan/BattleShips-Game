@@ -37,6 +37,13 @@ public class GridLocation {
 		return null;
 	}
 	
+	public boolean canGuess(){
+		if (this.type >= BattleShipTableModel.SEA)
+			return true;
+		else
+			return false;
+	}
+	
 	public void setType(int type) {
 		this.type = type;
 	}
