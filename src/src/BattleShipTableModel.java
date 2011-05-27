@@ -64,11 +64,17 @@ public class BattleShipTableModel extends AbstractTableModel {
 		return grid;
 	}
 	
+	/**
+	 * Add a cloned GridLocation to ArrayList 
+	 * and make the original one to GUESS type
+	 * @param grid
+	 * @return true : if all goes fine
+	 */
 	public boolean addGuess(GridLocation grid){
-		if (grid.canGuess() && guess.add(grid))
+		if (grid.canGuess() && guess.add((GridLocation) grid.clone())){
+			grid.setType(BattleShipTableModel.GUESS);
 			return true;
-		else
-			return false;
+		} else { return false;}
 	}
 	
 	public ArrayList<GridLocation> getGuess() {
@@ -77,7 +83,6 @@ public class BattleShipTableModel extends AbstractTableModel {
 	
 	
 	//functions related to state pattern
-	
 	public PlayState getCurrentState(){
 		return this.currentState;
 	}
@@ -100,7 +105,6 @@ public class BattleShipTableModel extends AbstractTableModel {
 	
 	
 	// initialize stages
-	
 	public final static PlayState FIRESTATE = new FireState();
 	public final static PlayState COMFIRMSTATE = new ComfirmState();
 	public final static PlayState GAMEOVERSTATE = new GameOverState();

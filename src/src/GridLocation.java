@@ -2,7 +2,7 @@ package src;
 
 import java.awt.Color;
 
-public class GridLocation {
+public class GridLocation implements Cloneable{
 	public GridLocation(int _x, int _y){
 		this.x = _x;
 		this.y = _y;
@@ -66,5 +66,16 @@ public class GridLocation {
 	private int y;
 	private int type;
 	private boolean placeState=true;
+	@Override
+	protected Object clone() {
+		// TODO Auto-generated method stub
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }
