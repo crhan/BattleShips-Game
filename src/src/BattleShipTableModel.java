@@ -4,7 +4,7 @@
 package src;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.*;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -142,6 +142,14 @@ public class BattleShipTableModel extends AbstractTableModel {
 	public int getSize() { return size; }
 
 	public void setSize(int size) { this.size = size; }
+	
+	public BattleShip getCurrentShip() {
+		return currentShip;
+	}
+
+	public void setCurrentShip(int type) {
+		this.currentShip = this.getShip(type);
+	}
 
 
 	// initialize stages
@@ -156,6 +164,10 @@ public class BattleShipTableModel extends AbstractTableModel {
 	private ArrayList<GridLocation> guess;
 	private PlayState currentState;
 	private ArrayList<BattleShip> ships;
+	private Iterator<BattleShip> currentShip;
+	
+
+
 	private BattleShipTableModel anotherPlayer;
 	
 	public final static int SEA = 0;
