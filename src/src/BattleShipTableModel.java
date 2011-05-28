@@ -29,6 +29,17 @@ public class BattleShipTableModel extends AbstractTableModel {
 			ships.add(new BattleShip(i+1));
 		}
 		shipLeft = 5;
+		currentShip = ships.iterator();
+	}
+	
+	public void initGrid(){
+		GridLocation _x;
+		for (int i=0; i<this.size; i++){
+			for (int j=0; j<this.size; j++){
+				_x = (GridLocation) cells[i][j];
+				_x.setType(BattleShipTableModel.SEA);
+			}
+		}
 	}
 	
 	@Override
@@ -52,6 +63,14 @@ public class BattleShipTableModel extends AbstractTableModel {
 			return false;
 		}
 		return true;
+	}
+	
+	public void updateGrid(){
+		this.initGrid();
+		Iterator<BattleShip> _a = ships.iterator();
+		if(_a.hasNext()){
+			_a.next().updateLocation((GridLocation[][]) cells);
+		}
 	}
 	
 	
@@ -143,14 +162,12 @@ public class BattleShipTableModel extends AbstractTableModel {
 
 	public void setSize(int size) { this.size = size; }
 	
-	public BattleShip getCurrentShip() {
-		return currentShip;
+	public BattleShip getNextShip() {
+		if(currentShip.hasNext())
+			return currentShip.next();
+		else
+			return null;
 	}
-
-	public void setCurrentShip(int type) {
-		this.currentShip = this.getShip(type);
-	}
-
 
 	// initialize stages
 	public final static PlayState FIRE_STATE = new FireState();

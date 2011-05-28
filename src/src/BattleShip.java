@@ -43,12 +43,13 @@ public class BattleShip {
 	 * @param _location
 	 * @throws GridOutOfBoundsException
 	 */
-	public void setLocation(int size, GridLocation _location)
+	public boolean setLocation(int size, GridLocation _location)
 			throws GridOutOfBoundsException {
 		// check if in bound of the cells
 		if (this.horizontal) {
 			if (_location.getX() + this.length < size) {
 				this.location = _location; // in bound and set the location
+				return true;
 			} else {
 				throw new GridOutOfBoundsException(); // out of bounds and throw
 														// the exception
@@ -56,11 +57,13 @@ public class BattleShip {
 		} else {
 			if (_location.getY() + this.length < size) {
 				this.location = _location;
+				return true;
 			} else {
 				throw new GridOutOfBoundsException(); // out of bounds and throw
 														// the exception
 			}
 		}
+		return false;
 	}
 
 	/**
@@ -119,7 +122,7 @@ public class BattleShip {
 
 	public void setHorizontal(boolean horizontal) { this.horizontal = horizontal; }
 	
-	public String toString(){ return "This is the ship of "+this.type; }
+	public String toString(){ return "This is the ship of "+type; }
 
 	private boolean horizontal;
 	private int length;

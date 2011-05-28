@@ -4,10 +4,17 @@ public class PrepareState extends PlayState {
 
 	@Override
 	public boolean click(BattleShipTableModel model, GridLocation location) {
-		try {
-			super.context.getCurrentShip().setLocation(super.context.getSize(), location);
-		} catch (GridOutOfBoundsException e) {
-			e.printStackTrace();
+		BattleShip _a = super.context.getNextShip();
+		if ( _a != null ){
+			try {
+				_a.setLocation(context.getSize(), location);
+				super.context.updateGrid();
+				return true;
+			} catch (GridOutOfBoundsException e) {
+				e.printStackTrace();
+			}
+		} else {
+			
 		}
 		return false;
 	}
