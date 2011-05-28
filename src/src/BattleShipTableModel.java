@@ -4,8 +4,9 @@
 package src;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.*;
 
+import javax.swing.RepaintManager;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -29,6 +30,17 @@ public class BattleShipTableModel extends AbstractTableModel {
 			ships.add(new BattleShip(i+1));
 		}
 		shipLeft = 5;
+		currentShipType = 1;
+	}
+	
+	public void initGrid(){
+		GridLocation _x;
+		for (int i=0; i<this.size; i++){
+			for (int j=0; j<this.size; j++){
+				_x = (GridLocation) cells[i][j];
+				_x.setType(BattleShipTableModel.SEA);
+			}
+		}
 	}
 	
 	@Override
@@ -52,6 +64,14 @@ public class BattleShipTableModel extends AbstractTableModel {
 			return false;
 		}
 		return true;
+	}
+	
+	public void updateGrid(){
+		this.initGrid();
+		Iterator<BattleShip> _a = ships.iterator();
+		if(_a.hasNext()){
+			_a.next().updateLocation((GridLocation[][]) cells);
+		}
 	}
 	
 	
@@ -142,20 +162,29 @@ public class BattleShipTableModel extends AbstractTableModel {
 	public int getSize() { return size; }
 
 	public void setSize(int size) { this.size = size; }
-
+	
+	public int getCurrentShipType(){ return this.currentShipType; }
+	
+	public void setCurrentShipType(int i) { this.currentShipType = i; }
+	
 
 	// initialize stages
 	public final static PlayState FIRE_STATE = new FireState();
 	public final static PlayState COMFIRM_STATE = new ComfirmState();
 	public final static PlayState GAMEOVER_STATE = new GameOverState();
+	public final static PlayState PREPARE_STATE = new PrepareState();
 
 	private int size;
 	private int shipLeft;
+	private int currentShipType;
 	private boolean myTurn;
 	private Object cells[][];
 	private ArrayList<GridLocation> guess;
 	private PlayState currentState;
 	private ArrayList<BattleShip> ships;
+	
+
+
 	private BattleShipTableModel anotherPlayer;
 	
 	public final static int SEA = 0;
