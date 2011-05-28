@@ -14,7 +14,6 @@ public class GameOverState extends PlayState {
 
 	@Override
 	public void showResult() {
-		// TODO Auto-generated method stub
 		BattleShipTableModel model = super.context;
 		BattleShipTableModel model2 = super.context.getAnotherPlayer();
 		

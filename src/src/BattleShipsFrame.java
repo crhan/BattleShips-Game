@@ -1,21 +1,7 @@
 package src;
 import info.clearthought.layout.TableLayout;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-
-import javax.swing.WindowConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.SwingUtilities;
+import java.awt.*;
+import javax.swing.*;
 
 
 /**
@@ -50,8 +36,6 @@ public class BattleShipsFrame extends javax.swing.JFrame {
 	private JComboBox jComboBox1;
 	private JLabel player1;
 	private JLabel Player2;
-	private ButtonGroup buttonGroup2;
-	private ButtonGroup buttonGroup1;
 	private JButton jButton5;
 	private JTable table2;
 
@@ -81,7 +65,8 @@ public class BattleShipsFrame extends javax.swing.JFrame {
 			getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			{
-				BattleShipTableModel model1 = new BattleShipTableModel(size);
+				model1 = new BattleShipTableModel(size);
+				model1.setAnotherPlayer(model2);
 				table1 = new JTable();
 				table1.setRowSelectionAllowed(false);
 				table1.setDefaultRenderer(Color.class, new BattleShipTableRenderer());
@@ -90,7 +75,8 @@ public class BattleShipsFrame extends javax.swing.JFrame {
 				table1.setRowHeight(25);
 			}
 			{
-				BattleShipTableModel model2 = new BattleShipTableModel(size);
+				model2 = new BattleShipTableModel(size);
+				model2.setAnotherPlayer(model1);
 				table2 = new JTable();
 				table2.setRowSelectionAllowed(false);
 				table2.setDefaultRenderer(Color.class, new BattleShipTableRenderer());
@@ -157,6 +143,8 @@ public class BattleShipsFrame extends javax.swing.JFrame {
 	
 
 	private int size=10;
+	private BattleShipTableModel model1;
+	private BattleShipTableModel model2;
 	
 	private final static int DEFAULT_WIDTH = 600;
 	private final static int DEFAULT_HEIGHT = 300;
