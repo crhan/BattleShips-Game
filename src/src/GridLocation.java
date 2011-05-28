@@ -2,7 +2,7 @@ package src;
 
 import java.awt.Color;
 
-public class GridLocation {
+public class GridLocation implements Cloneable{
 	public GridLocation(int _x, int _y){
 		this.x = _x;
 		this.y = _y;
@@ -24,6 +24,10 @@ public class GridLocation {
 			return Color.gray;
 		case BattleShipTableModel.SEA:
 			return Color.blue;
+		case BattleShipTableModel.WIN:
+			return Color.cyan;
+		case BattleShipTableModel.LOSE:
+			return Color.red;
 		case BattleShipTableModel.PATROL_BOAT:
 		case BattleShipTableModel.SUBMARINE:
 		case BattleShipTableModel.DESTROYER:
@@ -35,6 +39,13 @@ public class GridLocation {
 				return Color.blue;
 		}
 		return null;
+	}
+	
+	public boolean canGuess(){
+		if (this.type >= BattleShipTableModel.SEA)
+			return true;
+		else
+			return false;
 	}
 	
 	public void setType(int type) {
@@ -59,5 +70,15 @@ public class GridLocation {
 	private int y;
 	private int type;
 	private boolean placeState=true;
+	
+	@Override
+	protected Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }
