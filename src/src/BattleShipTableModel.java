@@ -24,6 +24,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 			}
 		}
 		// initializing five ships
+		ships = new ArrayList<BattleShip>();
 		for (int i=0; i<5; i++){
 			ships.add(new BattleShip(i+1));
 		}
@@ -31,14 +32,10 @@ public class BattleShipTableModel extends AbstractTableModel {
 	}
 	
 	@Override
-	public int getColumnCount() {
-		return size;
-	}
+	public int getColumnCount() { return size; }
 
 	@Override
-	public int getRowCount() {
-		return size;
-	}
+	public int getRowCount() { return size; }
 
 	@Override
 	public Class<Color> getColumnClass(int c){
@@ -91,18 +88,14 @@ public class BattleShipTableModel extends AbstractTableModel {
 		} else { return false;}
 	}
 	
-	public ArrayList<GridLocation> getGuess() {
-		return guess;
-	}
+	public ArrayList<GridLocation> getGuess() { return guess; }
 	
 	/**
 	 * return the ship of the given type
 	 * @param type
 	 * @return BattleShip
 	 */
-	public BattleShip getShip(int type){
-		return ships.get(type-1);
-	}
+	public BattleShip getShip(int type){ return ships.get(type-1); }
 	
 	/**
 	 * invoke function from {@link BattleShip}.sank
@@ -118,9 +111,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 	}
 	
 	//functions related to state pattern
-	public PlayState getCurrentState(){
-		return this.currentState;
-	}
+	public PlayState getCurrentState(){ return this.currentState; }
 	
 	public void setCurrentState(PlayState _state){
 		this.currentState = _state;
@@ -131,28 +122,32 @@ public class BattleShipTableModel extends AbstractTableModel {
 		return this.currentState.click(model, location);
 	}
 	
-	public void comfirm(BattleShipTableModel model){
-		this.currentState.comfirm(model);
-	}
-	public void showResult(){
-		this.currentState.showResult();
-	}
+	public void comfirm(BattleShipTableModel model){ this.currentState.comfirm(model); }
+	
+	public void showResult(){ this.currentState.showResult(); }
+	
 	public void changePlayer(){
 		this.getAnotherPlayer().setTurn(this.myTurn);
 		this.setTurn(!this.myTurn);
 	}
-	public void setTurn(boolean turn){
-		this.myTurn = turn;
-	}
-	public boolean getTurn(){
-		return this.myTurn;
-	}
 	
+	public void setTurn(boolean turn){ this.myTurn = turn; }
 	
+	public boolean getTurn(){ return this.myTurn; }
+	
+	public int getShipLeft() { return shipLeft; }
+	
+	public void setShipLeft(int shipLeft) { this.shipLeft = shipLeft; }
+
+	public int getSize() { return size; }
+
+	public void setSize(int size) { this.size = size; }
+
+
 	// initialize stages
-	public final static PlayState FIRESTATE = new FireState();
-	public final static PlayState COMFIRMSTATE = new ComfirmState();
-	public final static PlayState GAMEOVERSTATE = new GameOverState();
+	public final static PlayState FIRE_STATE = new FireState();
+	public final static PlayState COMFIRM_STATE = new ComfirmState();
+	public final static PlayState GAMEOVER_STATE = new GameOverState();
 
 	private int size;
 	private int shipLeft;
@@ -168,6 +163,8 @@ public class BattleShipTableModel extends AbstractTableModel {
 	public final static int MISS = -2;
 	public final static int SANK = -3;
 	public final static int GUESS = -4;
+	public final static int WIN = -5;
+	public final static int LOSE = -6;
 	public final static int AIRCRAFT_CARRIER = 5;
 	public final static int BATTLESHIP = 4;
 	public final static int DESTROYER = 3;

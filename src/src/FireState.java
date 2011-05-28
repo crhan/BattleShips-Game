@@ -15,7 +15,7 @@ public class FireState extends PlayState {
 
 	@Override
 	public void comfirm(BattleShipTableModel model) {
-		super.context.setCurrentState(BattleShipTableModel.COMFIRMSTATE);
+		super.context.setCurrentState(BattleShipTableModel.COMFIRM_STATE);
 		super.context.comfirm(model);
 		
 	}

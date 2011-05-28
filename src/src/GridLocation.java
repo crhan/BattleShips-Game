@@ -24,6 +24,10 @@ public class GridLocation implements Cloneable{
 			return Color.gray;
 		case BattleShipTableModel.SEA:
 			return Color.blue;
+		case BattleShipTableModel.WIN:
+			return Color.cyan;
+		case BattleShipTableModel.LOSE:
+			return Color.red;
 		case BattleShipTableModel.PATROL_BOAT:
 		case BattleShipTableModel.SUBMARINE:
 		case BattleShipTableModel.DESTROYER:
@@ -66,13 +70,12 @@ public class GridLocation implements Cloneable{
 	private int y;
 	private int type;
 	private boolean placeState=true;
+	
 	@Override
 	protected Object clone() {
-		// TODO Auto-generated method stub
 		try {
 			return super.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

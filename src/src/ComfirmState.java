@@ -5,7 +5,7 @@ public class ComfirmState extends PlayState {
 	@Override
 	public boolean click(BattleShipTableModel model, GridLocation location) {
 		if (context.getTurn()){
-			this.context.setCurrentState(BattleShipTableModel.FIRESTATE);
+			this.context.setCurrentState(BattleShipTableModel.FIRE_STATE);
 			return this.context.click(model, location);
 		}
 		else
@@ -41,7 +41,7 @@ public class ComfirmState extends PlayState {
 
 	@Override
 	public void showResult() {
-		this.context.setCurrentState(BattleShipTableModel.GAMEOVERSTATE);
+		this.context.setCurrentState(BattleShipTableModel.GAMEOVER_STATE);
 		this.context.showResult();
 	}
 
