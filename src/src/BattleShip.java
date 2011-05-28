@@ -29,6 +29,10 @@ public class BattleShip  {
 		return location;
 	}
 
+	public int getLenth(){
+		return length;
+	}
+
 	/**
 	 * This function check if the location is inbounds and 
 	 * then set the location to ship
@@ -73,9 +77,31 @@ public class BattleShip  {
 		}
 	}
 	
+	/**
+	 * Ship get hit and hitLeft minus one
+	 * @return hitLeft
+	 */
 	public int hit(){
 		this.hitLeft--;
 		return this.hitLeft;
+	}
+	
+	/**
+	 * Sign the ship to {@link BattleShipTableModel}.SANK
+	 * @param model
+	 */
+	public void sank(BattleShipTableModel model){
+		int _x = this.location.getX();
+		int _y = this.location.getY();
+		if (this.horizontal){
+			for (int i=_x; i<_x+this.length; i++){
+				model.getGridLocate(i, _y).setType(BattleShipTableModel.SANK);
+			} 
+		}else{
+			for (int i=_y; i<_y+this.length; i++){
+				model.getGridLocate(_x, i).setType(BattleShipTableModel.SANK);	
+			}
+		}
 	}
 
 	public boolean isHorizontal() {

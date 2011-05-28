@@ -23,6 +23,11 @@ public class BattleShipTableModel extends AbstractTableModel {
 				cells[i][j] = new GridLocation(i,j);
 			}
 		}
+		// initializing five ships
+		for (int i=0; i<5; i++){
+			ships.add(new BattleShip(i+1));
+		}
+		shipLeft = 5;
 	}
 	
 	@Override
@@ -35,7 +40,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 		return size;
 	}
 
-	
+	@Override
 	public Class<Color> getColumnClass(int c){
 		return Color.class;
 	}
@@ -52,6 +57,15 @@ public class BattleShipTableModel extends AbstractTableModel {
 		return true;
 	}
 	
+	
+	public BattleShipTableModel getAnotherPlayer() {
+		return this.anotherPlayer;
+	}
+
+	public void setAnotherPlayer(BattleShipTableModel _Player) {
+		this.anotherPlayer = _Player;
+	}
+
 	public GridLocation getGridLocate(int _x, int _y){
 		if (_x<size && _y<size)
 			return (GridLocation) cells[_x][_y];
@@ -68,7 +82,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 	 * Add a cloned GridLocation to ArrayList 
 	 * and make the original one to GUESS type
 	 * @param grid
-	 * @return true : if all goes fine
+	 * @return true" if all goes fine
 	 */
 	public boolean addGuess(GridLocation grid){
 		if (grid.canGuess() && guess.add((GridLocation) grid.clone())){
@@ -81,6 +95,27 @@ public class BattleShipTableModel extends AbstractTableModel {
 		return guess;
 	}
 	
+	/**
+	 * return the ship of the given type
+	 * @param type
+	 * @return BattleShip
+	 */
+	public BattleShip getShip(int type){
+		return ships.get(type-1);
+	}
+	
+	/**
+	 * invoke function from {@link BattleShip}.sank
+	 * which marks the ships grid as SANK
+	 * @param type
+	 * @return shipLeft
+	 */
+	public int sank(int type){
+		shipLeft--;
+		this.getShip(type).sank(this);
+		
+		return shipLeft;
+	}
 	
 	//functions related to state pattern
 	public PlayState getCurrentState(){
@@ -102,6 +137,16 @@ public class BattleShipTableModel extends AbstractTableModel {
 	public void showResult(){
 		this.currentState.showResult();
 	}
+	public void changePlayer(){
+		this.getAnotherPlayer().setTurn(this.myTurn);
+		this.setTurn(!this.myTurn);
+	}
+	public void setTurn(boolean turn){
+		this.myTurn = turn;
+	}
+	public boolean getTurn(){
+		return this.myTurn;
+	}
 	
 	
 	// initialize stages
@@ -110,9 +155,13 @@ public class BattleShipTableModel extends AbstractTableModel {
 	public final static PlayState GAMEOVERSTATE = new GameOverState();
 
 	private int size;
+	private int shipLeft;
+	private boolean myTurn;
 	private Object cells[][];
 	private ArrayList<GridLocation> guess;
 	private PlayState currentState;
+	private ArrayList<BattleShip> ships;
+	private BattleShipTableModel anotherPlayer;
 	
 	public final static int SEA = 0;
 	public final static int HIT = -1;
