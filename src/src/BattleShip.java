@@ -36,34 +36,45 @@ public class BattleShip {
 	}
 
 	/**
-	 * This function check if the location is inbounds and then set the location
-	 * to ship
+	 * This function check if the location is inbounds and no ship is cross over
+	 * then set the location to ship
 	 * 
 	 * @param size
 	 * @param _location
 	 * @throws GridOutOfBoundsException
+	 * @throws BattleShipCrossOverException 
 	 */
-	public boolean setLocation(int size, GridLocation _location)
-			throws GridOutOfBoundsException {
+	public void setLocation(int size, GridLocation _location, BattleShipTableModel model)
+			throws GridOutOfBoundsException, BattleShipCrossOverException {
+		GridLocation check;
 		// check if in bound of the cells
 		if (this.horizontal) {
 			if (_location.getX() + this.length < size) {
+				//check every grid the ship will cover
+				for (int i=0; i<this.length; i++){
+					//get the grid to check
+					check = model.getGridLocate(_location.getX()+i, _location.getY());
+					if (check.getType()> BattleShipTableModel.SEA && check.getType() != this.type )
+						throw new BattleShipCrossOverException();
+				}
 				this.location = _location; // in bound and set the location
-				return true;
 			} else {
 				throw new GridOutOfBoundsException(); // out of bounds and throw
 														// the exception
 			}
 		} else {
 			if (_location.getY() + this.length < size) {
+				for (int i=0; i<this.length; i++){
+					//get the grid to check
+					check = model.getGridLocate(_location.getX(), _location.getY()+i);
+					if (check.getType()> BattleShipTableModel.SEA)
+						throw new BattleShipCrossOverException();
+				}
 				this.location = _location;
-				return true;
 			} else {
 				throw new GridOutOfBoundsException(); // out of bounds and throw
-														// the exception
 			}
 		}
-		return false;
 	}
 
 	/**

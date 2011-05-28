@@ -6,6 +6,7 @@ package src;
 import java.awt.Color;
 import java.util.*;
 
+import javax.swing.RepaintManager;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -29,7 +30,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 			ships.add(new BattleShip(i+1));
 		}
 		shipLeft = 5;
-		currentShip = ships.iterator();
+		currentShipType = 1;
 	}
 	
 	public void initGrid(){
@@ -162,26 +163,25 @@ public class BattleShipTableModel extends AbstractTableModel {
 
 	public void setSize(int size) { this.size = size; }
 	
-	public BattleShip getNextShip() {
-		if(currentShip.hasNext())
-			return currentShip.next();
-		else
-			return null;
-	}
+	public int getCurrentShipType(){ return this.currentShipType; }
+	
+	public void setCurrentShipType(int i) { this.currentShipType = i; }
+	
 
 	// initialize stages
 	public final static PlayState FIRE_STATE = new FireState();
 	public final static PlayState COMFIRM_STATE = new ComfirmState();
 	public final static PlayState GAMEOVER_STATE = new GameOverState();
+	public final static PlayState PREPARE_STATE = new PrepareState();
 
 	private int size;
 	private int shipLeft;
+	private int currentShipType;
 	private boolean myTurn;
 	private Object cells[][];
 	private ArrayList<GridLocation> guess;
 	private PlayState currentState;
 	private ArrayList<BattleShip> ships;
-	private Iterator<BattleShip> currentShip;
 	
 
 
