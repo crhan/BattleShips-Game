@@ -4,7 +4,7 @@ public class ComfirmState extends PlayState {
 
 	@Override
 	public boolean click(BattleShipTableModel model, GridLocation location) {
-		if (context.getTurn()){
+		if (context.isMyTurn()){
 			this.context.setCurrentState(BattleShipTableModel.FIRE_STATE);
 			return this.context.click(model, location);
 		}
