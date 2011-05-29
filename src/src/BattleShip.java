@@ -1,7 +1,5 @@
 package src;
 
-import java.rmi.registry.LocateRegistry;
-
 public class BattleShip {
 	public BattleShip(int _type) {
 		switch (_type) {
@@ -23,7 +21,7 @@ public class BattleShip {
 		}
 
 		this.type = _type;
-		horizontal = true;
+		vertical = false;
 		hitLeft = length;
 	}
 
@@ -48,8 +46,8 @@ public class BattleShip {
 			throws GridOutOfBoundsException, BattleShipCrossOverException {
 		GridLocation check;
 		// check if in bound of the cells
-		if (this.horizontal) {
-			if (_location.getX() + this.length < size) {
+		if (this.vertical) {
+			if (_location.getX() + this.length <= size) {
 				//check every grid the ship will cover
 				for (int i=0; i<this.length; i++){
 					//get the grid to check
@@ -82,19 +80,19 @@ public class BattleShip {
 	 * 
 	 * @param cells
 	 */
-	public void updateLocation(GridLocation[][] cells) {
+	public void updateLocation(BattleShipTableModel model) {
 		if (this.location != null) {
 			
 			int _x = this.location.getX();
 			int _y = this.location.getY();
 
-			if (this.horizontal) {
+			if (this.vertical) {
 				for (int i = _x; i < _x + this.length; i++) {
-					cells[i][_y].setType(this.type);
+					model.getGridLocate(i,_y).setType(this.type);
 				}
 			} else {
 				for (int i = _y; i < _y + this.length; i++) {
-					cells[_x][i].setType(this.type);
+					model.getGridLocate(_x, i).setType(this.type);
 				}
 			}
 		}
@@ -118,7 +116,7 @@ public class BattleShip {
 	public void sank(BattleShipTableModel model) {
 		int _x = this.location.getX();
 		int _y = this.location.getY();
-		if (this.horizontal) {
+		if (this.vertical) {
 			for (int i = _x; i < _x + this.length; i++) {
 				model.getGridLocate(i, _y).setType(BattleShipTableModel.SANK);
 			}
@@ -129,13 +127,13 @@ public class BattleShip {
 		}
 	}
 
-	public boolean isHorizontal() { return horizontal; }
+	public boolean isVertical() { return vertical; }
 
-	public void setHorizontal(boolean horizontal) { this.horizontal = horizontal; }
+	public void setVertical(boolean horizontal) { this.vertical = horizontal; }
 	
 	public String toString(){ return "This is the ship of "+type; }
 
-	private boolean horizontal;
+	private boolean vertical;
 	private int length;
 	private int hitLeft;
 	private int type;

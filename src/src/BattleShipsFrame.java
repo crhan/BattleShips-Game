@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.table.*;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -65,7 +67,34 @@ public class BattleShipsFrame extends javax.swing.JFrame {
 				getContentPane().add(table1, "1, 4, 4, 4, f, c");
 				table1.setModel(model1);
 				table1.setRowHeight(25);
+//				table1.getModel().addTableModelListener(new TableModelListener() {
+//					
+//					@Override
+//					public void tableChanged(TableModelEvent e) {
+//						// TODO Auto-generated method stub
+//						int row = e.getFirstRow();
+//				        int column = e.getColumn();
+//				        TableModel model = (TableModel)e.getSource();
+//				        String columnName = model.getColumnName(column);
+//				        GridLocation data = (GridLocation) model.getValueAt(row, column);
+//				        
+//					}
+//				});
 			}
+			
+			class BattleShipTableMouseAdapter extends MouseAdapter{
+				public void mouseClicked(MouseEvent event) {
+					JTable table =  (JTable)event.getSource();
+					// check for mouse click, just an example
+					int col = table.columnAtPoint(event.getPoint());
+					 //TODO should be modified for your own code
+					int row = table.rowAtPoint(event.getPoint());
+					System.out.println("col:" + col + ", row:" + row);
+					BattleShipTableModel model = (BattleShipTableModel) table.getModel();
+					model.click(model, model.getGridLocate(row, col));
+				}
+			}
+			
 			{
 				model2 = new BattleShipTableModel(size);
 				model2.setAnotherPlayer(model1);
@@ -76,16 +105,14 @@ public class BattleShipsFrame extends javax.swing.JFrame {
 				getContentPane().add(table2, "6, 4, 9, 4, c, c");
 				table2.setModel(model2);
 				table2.setRowHeight(25);
-				table1.addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent event) {
-						// check for mouse click, just an example
-						int col = table1.columnAtPoint(event.getPoint());
-						 //TODO should be modified for your own code
-						int row = table1.rowAtPoint(event.getPoint());
-						System.out.println("col:" + col + ", row:" + row);
-					}
-				});
+				table1.addMouseListener(new BattleShipTableMouseAdapter());
+				table2.addMouseListener(new BattleShipTableMouseAdapter());
 			}
+
+			model1.setCurrentState(BattleShipTableModel.PREPARE_STATE);
+			model2.setCurrentState(BattleShipTableModel.PREPARE_STATE);
+			model1.setTurn(true);
+			
 			{
 				Player2 = new JLabel();
 				getContentPane().add(Player2, "7, 3, 9, 3, c, c");
@@ -112,6 +139,14 @@ public class BattleShipsFrame extends javax.swing.JFrame {
 				jButton1 = new JButton();
 				getContentPane().add(jButton1, "2, 5");
 				jButton1.setText("aircraft carrier");
+				jButton1.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						model1.comfirm(model1);
+					}
+				});
 			}
 			{
 				jButton2 = new JButton();
@@ -133,17 +168,44 @@ public class BattleShipsFrame extends javax.swing.JFrame {
 				getContentPane().add(jButton5, "8, 5");
 				jButton5.setText("patrol boat");
 			}
+			//vertical check
+			{
+				JPanel checkBoxTestPanel = new JPanel();
+				vertial = new JCheckBox("Vertical");
+				vertial.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						if (vertial.isSelected())
+						{
+							model1.setShipVertical(true);
+							model2.setShipVertical(true);
+						} else {
+							model1.setShipVertical(false);
+							model2.setShipVertical(false);
+						}
+					}
+				});
+				checkBoxTestPanel.add(vertial);
+				getContentPane().add(vertial, "8, 6");
+				}
 			pack();
 			this.setSize(817, 587);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
 		}
+		
+		
 	}
+	
+	
 
 	private int size=10;
 	private BattleShipTableModel model1;
 	private BattleShipTableModel model2;
+	private JCheckBox vertial;
 	
 	private final static int DEFAULT_WIDTH = 600;
 	private final static int DEFAULT_HEIGHT = 300;

@@ -31,6 +31,8 @@ public class BattleShipTableModel extends AbstractTableModel {
 		}
 		shipLeft = 5;
 		currentShipType = 1;
+		guess = new ArrayList<GridLocation>();
+		shipVertical = false;
 	}
 	
 	public void initGrid(){
@@ -69,9 +71,10 @@ public class BattleShipTableModel extends AbstractTableModel {
 	public void updateGrid(){
 		this.initGrid();
 		Iterator<BattleShip> _a = ships.iterator();
-		if(_a.hasNext()){
-			_a.next().updateLocation((GridLocation[][]) cells);
+		while(_a.hasNext()){
+			_a.next().updateLocation(this);
 		}
+		this.fireTableDataChanged();
 	}
 	
 	
@@ -153,7 +156,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 	
 	public void setTurn(boolean turn){ this.myTurn = turn; }
 	
-	public boolean getTurn(){ return this.myTurn; }
+	public boolean isMyTurn(){ return this.myTurn; }
 	
 	public int getShipLeft() { return shipLeft; }
 	
@@ -168,6 +171,15 @@ public class BattleShipTableModel extends AbstractTableModel {
 	public void setCurrentShipType(int i) { this.currentShipType = i; }
 	
 
+	public boolean isShipVertical() {
+		return shipVertical;
+	}
+
+	public void setShipVertical(boolean _vertical) {
+		this.shipVertical = _vertical;
+	}
+
+
 	// initialize stages
 	public final static PlayState FIRE_STATE = new FireState();
 	public final static PlayState COMFIRM_STATE = new ComfirmState();
@@ -178,6 +190,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 	private int shipLeft;
 	private int currentShipType;
 	private boolean myTurn;
+	private boolean shipVertical;
 	private Object cells[][];
 	private ArrayList<GridLocation> guess;
 	private PlayState currentState;
