@@ -17,19 +17,8 @@ public class GameOverState extends PlayState {
 		BattleShipTableModel model = super.getContext();
 		BattleShipTableModel model2 = model.getAnotherPlayer();
 
-		this.cleanBoard(model);
-		this.cleanBoard(model2);
-
-		// check the shipLeft and mark the winner
-		if (model.getShipLeft() <= 0)
-			this.setResultGrid(model, true);
-		else
-			this.setResultGrid(model, false);
-
-		if (model2.getShipLeft() <= 0)
-			this.setResultGrid(model2, true);
-		else
-			this.setResultGrid(model2, false);
+		model.setShipPlaceState(true);
+		model2.setShipPlaceState(true);
 		model.fireTableDataChanged();
 		model2.fireTableDataChanged();
 		model.setCurrentState(BattleShipTableModel.GAMEOVER_STATE);
