@@ -108,6 +108,28 @@ public class BattleShipsFram extends JFrame {
 		common.add(start);
 		common.add(quit);
 		menuBar.add(common);
+		
+		JMenu prepare = new JMenu("Prepare");
+		isVertical = new JCheckBoxMenuItem("Vertical");
+		prepare.add(isVertical);
+		menuBar.add(prepare);
+		
+		// menuItem isVertical
+		isVertical.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (isVertical.isSelected()){
+					model1.setShipVertical(true);
+					model2.setShipVertical(true);
+				} else {
+					model1.setShipVertical(false);
+					model2.setShipVertical(false);
+				}
+			}
+		});
+		
+		// menuItem Start actionPerform
 		start.addActionListener(new ActionListener() {
 			
 			@Override
@@ -196,6 +218,7 @@ public class BattleShipsFram extends JFrame {
 	private static JButton comfirm;
 	private JCheckBox checkSalvoRules;
 	private JComboBox comboBoxSize;
+	JCheckBoxMenuItem isVertical;
 	public final static JFrame thisFrame = new BattleShipsFram();
 
 	private final static int DEFAULT_WIDTH = 800;
