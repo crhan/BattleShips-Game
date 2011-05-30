@@ -4,22 +4,20 @@ public class FireState extends PlayState {
 
 	@Override
 	public boolean click(BattleShipTableModel model, GridLocation location) {
-		if (context.isMyTurn())
-		{
-		model.addGuess(location);
-		System.out.println(model.getGuess().size());
-		model.fireTableDataChanged();
-		return true;
-		}
-		else
+		if (model.isMyTurn()) {
+			model.addGuess(location);
+			System.out.println(model.getGuess().size());
+			model.fireTableDataChanged();
+			return true;
+		} else
 			return false;
 	}
 
 	@Override
 	public void comfirm(BattleShipTableModel model) {
-		super.context.setCurrentState(BattleShipTableModel.COMFIRM_STATE);
-		super.context.comfirm(model);
-		
+		super.getContext().setCurrentState(BattleShipTableModel.COMFIRM_STATE);
+		super.getContext().comfirm(model);
+
 	}
 
 	@Override

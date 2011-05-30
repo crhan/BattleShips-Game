@@ -4,14 +4,14 @@ public class PrepareState extends PlayState {
 
 	@Override
 	public boolean click(BattleShipTableModel _model, GridLocation location) {
-		BattleShipTableModel model;
+		assert(_model.isMyTurn());
 		if (_model.isMyTurn()) {
 			int _type = _model.getCurrentShipType();
 			BattleShip _a = _model.getShip(_type);
 			_a.setVertical(_model.isShipVertical());
 			// if has ship, then try to set the location
 			try {
-				_a.setLocation(context.getSize(), location, _model);
+				_a.setLocation(_model.getSize(), location, _model);
 				_model.updateGrid();
 				_model.setCurrentShipType(_type + 1);
 				return true;

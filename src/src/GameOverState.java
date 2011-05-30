@@ -14,11 +14,12 @@ public class GameOverState extends PlayState {
 
 	@Override
 	public void showResult() {
-		BattleShipTableModel model = super.context;
-		BattleShipTableModel model2 = super.context.getAnotherPlayer();
+		BattleShipTableModel model = super.getContext();
+		BattleShipTableModel model2 = model.getAnotherPlayer();
 		
 		
-		this.cleanBoard(super.context);
+		this.cleanBoard(model);
+		this.cleanBoard(model2);
 		
 		// check the shipLeft and mark the winner
 		if (model.getShipLeft() <=0 )
