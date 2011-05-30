@@ -12,7 +12,7 @@ public class BattleShips {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable(){
 			public void run(){
-				BattleShipsFram frame = new BattleShipsFram();
+				BattleShipsFram frame = (BattleShipsFram) BattleShipsFram.thisFrame;
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
 			}

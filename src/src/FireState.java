@@ -18,7 +18,7 @@ public class FireState extends PlayState {
 				model.fireTableDataChanged();
 				return true;
 			} else {
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(BattleShipsFram.thisFrame,
 						"You have reach the max fire number");
 				return false;
 			}

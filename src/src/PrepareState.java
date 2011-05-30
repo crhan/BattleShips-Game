@@ -57,7 +57,7 @@ public class PrepareState extends PlayState {
 		for(int i=1 ; i<=5; i++){
 			_location = _model.getShip(i).getLocation();
 			if ( _location == null){
-				JOptionPane.showMessageDialog(null, "You need to place all five ships to continue");
+				JOptionPane.showMessageDialog(BattleShipsFram.thisFrame, "You need to place all five ships to continue");
 				return;
 			}
 		}

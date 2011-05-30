@@ -1,5 +1,7 @@
 package src;
 
+import javax.swing.JOptionPane;
+
 public class GameOverState extends PlayState {
 
 	@Override
@@ -23,6 +25,7 @@ public class GameOverState extends PlayState {
 		model2.fireTableDataChanged();
 		model.setCurrentState(BattleShipTableModel.GAMEOVER_STATE);
 		model2.setCurrentState(BattleShipTableModel.GAMEOVER_STATE);
+		JOptionPane.showMessageDialog(BattleShipsFram.thisFrame, toString());
 
 	}
 
