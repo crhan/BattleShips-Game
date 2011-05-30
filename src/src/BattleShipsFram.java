@@ -106,7 +106,7 @@ public class BattleShipsFram extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				//TODO 增加开始dialog,选择salvo rules和选择size
 				JDialog dialog = new StartGameDialog(thisFrame);
 				dialog.setLocationRelativeTo(thisFrame);
 				dialog.setVisible(true);
@@ -116,7 +116,6 @@ public class BattleShipsFram extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				System.exit(0);
 				
 			}
@@ -172,7 +171,6 @@ public class BattleShipsFram extends JFrame {
 			JTable table =  (JTable)event.getSource();
 			// check for mouse click, just an example
 			int col = table.columnAtPoint(event.getPoint());
-			 //TODO should be modified for your own code
 			int row = table.rowAtPoint(event.getPoint());
 			System.out.println("col:" + col + ", row:" + row);
 			BattleShipTableModel model = (BattleShipTableModel) table.getModel();
@@ -205,7 +203,6 @@ public class BattleShipsFram extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
 					setVisible(false);
 				}
 			});
@@ -215,16 +212,5 @@ public class BattleShipsFram extends JFrame {
 			
 			setSize(250,250);
 		}
-	}
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable(){
-			public void run(){
-				BattleShipsFram frame = new BattleShipsFram();
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setVisible(true);
-				frame.getRootPane().setDefaultButton(comfirm);
-			}
-		});
 	}
 }

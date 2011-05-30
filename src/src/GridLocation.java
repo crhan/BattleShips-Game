@@ -35,7 +35,6 @@ public class GridLocation implements Cloneable{
 		case BattleShipTableModel.AIRCRAFT_CARRIER:
 			if (this.placeState)
 				return Color.green;
-			//TODO watch out here
 			else
 				return Color.blue;
 		}
