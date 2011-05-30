@@ -1,5 +1,7 @@
 package src;
 
+import javax.swing.JOptionPane;
+
 public class ComfirmState extends PlayState {
 
 	@Override
@@ -37,6 +39,7 @@ public class ComfirmState extends PlayState {
 			}
 		}
 		// nothing happened and change the player
+		model.getGuess().clear();
 		model.changePlayer();
 	}
 
@@ -46,4 +49,7 @@ public class ComfirmState extends PlayState {
 		super.getContext().showResult();
 	}
 
+	public void button(BattleShipTableModel model) {
+		JOptionPane.showMessageDialog(null, "Do you have any target?");
+	}
 }

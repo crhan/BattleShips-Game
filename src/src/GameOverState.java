@@ -76,4 +76,9 @@ public class GameOverState extends PlayState {
 			{6,3},{6,4}
 	};
 
+	@Override
+	public void button(BattleShipTableModel model) {
+		
+	}
+
 }
