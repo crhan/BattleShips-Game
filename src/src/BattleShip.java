@@ -61,7 +61,7 @@ public class BattleShip {
 														// the exception
 			}
 		} else {
-			if (_location.getY() + this.length < size) {
+			if (_location.getY() + this.length <= size) {
 				for (int i=0; i<this.length; i++){
 					//get the grid to check
 					check = model.getGridLocate(_location.getX(), _location.getY()+i);
