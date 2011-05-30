@@ -1,10 +1,7 @@
 package src;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -13,15 +10,35 @@ public class BattleShipsFram extends JFrame {
 	public BattleShipsFram(){
 		this.setTitle("Battle Ship");
 		this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-
 		dimensionTableSize = 300;
+		table1 =new JTable();
+		table2 = new JTable();
+		comfirm = new JButton("Comfirm");
+
+		// add comfirm actionListener
+		comfirm.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String _text = new String();
+				if (model1.isMyTurn()){
+					model1.button(model1);
+					_text += model2.getCurrentState();
+				} else {
+					model2.button(model2);
+					_text += model1.getCurrentState();
+				}
+				status.setText(_text);
+			}
+		});
+		
 		Border etched = BorderFactory.createEtchedBorder();
 
 		//initializing two tables
 		model1 = new BattleShipTableModel(size);
 		model2 = new BattleShipTableModel(size);
-		table1 = new JTable(model1);
-		table2 = new JTable(model2);
+		table1.setModel(model1);
+		table2.setModel(model2);
 		//setting the table size
 		table1.setPreferredSize(new Dimension(dimensionTableSize, dimensionTableSize));
 		table2.setPreferredSize(new Dimension(dimensionTableSize, dimensionTableSize));
@@ -34,7 +51,10 @@ public class BattleShipsFram extends JFrame {
 		model2.setAnotherPlayer(model1);
 		table1.setDefaultRenderer(Color.class, new BattleShipTableRenderer());
 		table2.setDefaultRenderer(Color.class, new BattleShipTableRenderer());
-
+		model1.initGrid(BattleShipTableModel.GUESS);
+		model2.initGrid(BattleShipTableModel.GUESS);
+		table1.addMouseListener(new BattleShipTableMouseAdapter());
+		table2.addMouseListener(new BattleShipTableMouseAdapter());
 
 		//initializing all panels;
 		panelMain = new JPanel();
@@ -45,6 +65,7 @@ public class BattleShipsFram extends JFrame {
 		panelMessage = new JPanel();
 		panelMain.setLayout(new BorderLayout());
 		panelInfo.setLayout(new BorderLayout());
+		
 
 		//adding table to panel
 		panelTable1.add(table1);
@@ -68,26 +89,12 @@ public class BattleShipsFram extends JFrame {
 
 		status = new JTextPane();
 		status.setEnabled(false);
-		this.changeStatus("Player1:\nPrepare state");
+		this.changeStatus("Wating for Start");
 		panelMessage.setBorder(BorderFactory.createTitledBorder(etched,"State"));
 		panelMessage.add(status);
 		status.setBackground(Color.darkGray);
 		panelInfo.add(panelMessage, BorderLayout.CENTER);
-		
-		comfirm = new JButton("Comfirm");
 		panelInfo.add(comfirm,BorderLayout.SOUTH);
-		comfirm.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (model1.isMyTurn())
-					model1.button(model1);
-				else
-					model2.button(model2);
-			}
-		});
-		
-
 		// Design main panel
 		panelMain.add(panelTable1, BorderLayout.WEST);
 		panelMain.add(panelInfo, BorderLayout.CENTER);
@@ -101,7 +108,7 @@ public class BattleShipsFram extends JFrame {
 		common.add(start);
 		common.add(quit);
 		menuBar.add(common);
-		final JFrame thisFrame = this;
+		thisFrame = this;
 		start.addActionListener(new ActionListener() {
 			
 			@Override
@@ -113,11 +120,9 @@ public class BattleShipsFram extends JFrame {
 			}
 		});
 		quit.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
-				
 			}
 		});
 		
@@ -133,9 +138,37 @@ public class BattleShipsFram extends JFrame {
 		//initializing the game
 		model1.setCurrentState(BattleShipTableModel.PREPARE_STATE);
 		model2.setCurrentState(BattleShipTableModel.PREPARE_STATE);
+		model1.setPlayerName("Player one");
+		model2.setPlayerName("Player two");
+		comfirm.setEnabled(false);
+	}
+	
+	public void startGame(){
+		//initializing two tables
+		model1 = new BattleShipTableModel(size);
+		model2 = new BattleShipTableModel(size);
+		table1.setModel(model1);
+		table2.setModel(model2);
+		//setting the table size
+		table1.setPreferredSize(new Dimension(dimensionTableSize, dimensionTableSize));
+		table2.setPreferredSize(new Dimension(dimensionTableSize, dimensionTableSize));
+		table1.setRowHeight(dimensionTableSize / size);
+		table2.setRowHeight(dimensionTableSize / size);
+		model1.initGrid(BattleShipTableModel.SEA);
+		model2.initGrid(BattleShipTableModel.SEA);
+		//initializing the game
+		model1.setCurrentState(BattleShipTableModel.PREPARE_STATE);
+		model2.setCurrentState(BattleShipTableModel.PREPARE_STATE);
+		model1.setPlayerName("Player one");
+		model2.setPlayerName("Player two");
 		model1.setTurn(true);
-		table1.addMouseListener(new BattleShipTableMouseAdapter());
-		table2.addMouseListener(new BattleShipTableMouseAdapter());
+		model2.setTurn(false);
+		model1.setAnotherPlayer(model2);
+		model2.setAnotherPlayer(model1);
+		comfirm.setEnabled(true);
+		status.setText(""+model1.getCurrentState());
+		model1.fireTableDataChanged();
+		model2.fireTableDataChanged();
 	}
 	
 	public void changeStatus(String _string){
@@ -162,6 +195,9 @@ public class BattleShipsFram extends JFrame {
 	private BattleShipTableModel model1,model2;
 	private JTable table1, table2;
 	private static JButton comfirm;
+	private JCheckBox checkSalvoRules;
+	private JComboBox comboBoxSize;
+	private JFrame thisFrame;
 
 	private final static int DEFAULT_WIDTH = 800;
 	private final static int DEFAULT_HEIGHT = 600;
@@ -190,9 +226,12 @@ public class BattleShipsFram extends JFrame {
 			
 			ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(
 					new String[] { "10", "11", "12" });
-			JComboBox comboBoxSize = new JComboBox();
+			comboBoxSize = new JComboBox();
 			getContentPane().add(comboBoxSize,BorderLayout.NORTH);
 			comboBoxSize.setModel(jComboBox1Model);
+			
+			checkSalvoRules = new JCheckBox("Salvo Rules");
+			add(checkSalvoRules,BorderLayout.CENTER);
 			
 			JPanel panel= new JPanel();
 			JButton ok = new JButton("OK");
@@ -203,7 +242,25 @@ public class BattleShipsFram extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					// check if use the salvo rules
+					if(checkSalvoRules.isSelected()){
+						model1.setSalvo(true);
+						model2.setSalvo(true);
+					} else {
+						model1.setSalvo(false);
+						model2.setSalvo(false);
+					}
+					String selected = (String) comboBoxSize.getSelectedItem();
+					if(selected == "11")
+						size = 11;
+					else if(selected == "12")
+						size = 12;
+					else if (selected == "10")
+						size = 10;
+					
+					startGame();
 					setVisible(false);
+					System.out.println(table1.getMouseListeners().length);
 				}
 			});
 			
