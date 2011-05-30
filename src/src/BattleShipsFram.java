@@ -242,13 +242,6 @@ public class BattleShipsFram extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// check if use the salvo rules
-					if(checkSalvoRules.isSelected()){
-						model1.setSalvo(true);
-						model2.setSalvo(true);
-					} else {
-						model1.setSalvo(false);
-						model2.setSalvo(false);
-					}
 					String selected = (String) comboBoxSize.getSelectedItem();
 					if(selected == "11")
 						size = 11;
@@ -258,6 +251,13 @@ public class BattleShipsFram extends JFrame {
 						size = 10;
 					
 					startGame();
+					if(checkSalvoRules.isSelected()){
+						model1.setSalvo(true);
+						model2.setSalvo(true);
+					} else {
+						model1.setSalvo(false);
+						model2.setSalvo(false);
+					}
 					setVisible(false);
 					System.out.println(table1.getMouseListeners().length);
 				}
