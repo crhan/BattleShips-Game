@@ -53,4 +53,6 @@ public class ComfirmState extends PlayState {
 	public void button(BattleShipTableModel model) {
 		JOptionPane.showMessageDialog(null, "Do you have any target?");
 	}
+	
+	public String toString(){ return getContext() + ":\nFiring State"; }
 }

@@ -36,38 +36,12 @@ public class BattleShipTableModel extends AbstractTableModel {
 		salvo = false;
 	}
 	
-	public void initGrid(){
+	public void initGrid(int type){
 		GridLocation _x;
 		for (int i=0; i<this.size; i++){
 			for (int j=0; j<this.size; j++){
 				_x = (GridLocation) cells[i][j];
-				_x.setType(BattleShipTableModel.SEA);
-			}
-		}
-	}
-	
-	@Override
-	public int getColumnCount() { return size; }
-
-	@Override
-	public int getRowCount() { return size; }
-
-	@Override
-	public Class<Color> getColumnClass(int c){
-		return Color.class;
-	}
-	@Override
-	public Object getValueAt(int arg0, int arg1) {
-		GridLocation g= (GridLocation)cells[arg0][arg1];
-		return g.getColor();
-	}
-	
-	public void setShipPlaceState(boolean foo){
-		GridLocation lo;
-		for (Object[] i:cells){
-			for (Object j:i){
-				lo = (GridLocation) j;
-				lo.setPlaceState(foo);
+				_x.setType(type);
 			}
 		}
 	}
@@ -80,7 +54,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 	}
 	
 	public void updateGrid(){
-		this.initGrid();
+		this.initGrid(BattleShipTableModel.SEA);
 		Iterator<BattleShip> _a = ships.iterator();
 		while(_a.hasNext()){
 			_a.next().updateLocation(this);
@@ -88,26 +62,6 @@ public class BattleShipTableModel extends AbstractTableModel {
 		this.fireTableDataChanged();
 	}
 	
-	
-	public BattleShipTableModel getAnotherPlayer() {
-		return this.anotherPlayer;
-	}
-
-	public void setAnotherPlayer(BattleShipTableModel _Player) {
-		this.anotherPlayer = _Player;
-	}
-
-	public GridLocation getGridLocate(int _x, int _y){
-		if (_x<size && _y<size)
-			return (GridLocation) cells[_x][_y];
-		else
-			return null;
-	}
-	
-	public GridLocation setGrid(int _type, GridLocation grid){
-		grid.setType(_type);
-		return grid;
-	}
 	
 	/**
 	 * Add a cloned GridLocation to ArrayList 
@@ -122,15 +76,6 @@ public class BattleShipTableModel extends AbstractTableModel {
 		} else { return false;}
 	}
 	
-	public ArrayList<GridLocation> getGuess() { return guess; }
-	
-	/**
-	 * return the ship of the given type
-	 * @param type
-	 * @return BattleShip
-	 */
-	public BattleShip getShip(int type){ return ships.get(type-1); }
-	
 	/**
 	 * invoke function from {@link BattleShip}.sank
 	 * which marks the ships grid as SANK
@@ -142,14 +87,6 @@ public class BattleShipTableModel extends AbstractTableModel {
 		this.getShip(type).sank(this);
 		
 		return shipLeft;
-	}
-	
-	//functions related to state pattern
-	public PlayState getCurrentState(){ return this.currentState; }
-	
-	public void setCurrentState(PlayState _state){
-		this.currentState = _state;
-		this.currentState.setContext(this);
 	}
 	
 	public boolean click(BattleShipTableModel model, GridLocation location){
@@ -167,39 +104,97 @@ public class BattleShipTableModel extends AbstractTableModel {
 		this.setTurn(!this.myTurn);
 	}
 	
-	public void setTurn(boolean turn){ this.myTurn = turn; }
-	
 	public boolean isMyTurn(){ return this.myTurn; }
-	
+
+	public boolean isShipVertical() { return shipVertical; }
+
+	public boolean isSalvo() { return salvo; }
+
+	public BattleShipTableModel getAnotherPlayer() {
+		return this.anotherPlayer;
+	}
+
+	//functions related to state pattern
+	public PlayState getCurrentState(){ return this.currentState; }
+
+	@Override
+	public int getColumnCount() { return size; }
+
+	@Override
+	public Class<Color> getColumnClass(int c){
+		return Color.class;
+	}
+
+	public GridLocation getGridLocate(int _x, int _y){
+		if (_x<size && _y<size)
+			return (GridLocation) cells[_x][_y];
+		else
+			return null;
+	}
+
+	@Override
+	public int getRowCount() { return size; }
+
+	@Override
+	public Object getValueAt(int arg0, int arg1) {
+		GridLocation g= (GridLocation)cells[arg0][arg1];
+		return g.getColor();
+	}
+
+	public ArrayList<GridLocation> getGuess() { return guess; }
+
+	/**
+	 * return the ship of the given type
+	 * @param type
+	 * @return BattleShip
+	 */
+	public BattleShip getShip(int type){ return ships.get(type-1); }
+
 	public int getShipLeft() { return shipLeft; }
 	
-	public void setShipLeft(int shipLeft) { this.shipLeft = shipLeft; }
-
 	public int getSize() { return size; }
 
-	public void setSize(int size) { this.size = size; }
-	
 	public int getCurrentShipType(){ return this.currentShipType; }
 	
+	public void setAnotherPlayer(BattleShipTableModel _Player) {
+		this.anotherPlayer = _Player;
+	}
+
+	public void setCurrentState(PlayState _state){
+		this.currentState = _state;
+		this.currentState.setContext(this);
+	}
+
+	public void setShipPlaceState(boolean foo){
+		GridLocation lo;
+		for (Object[] i:cells){
+			for (Object j:i){
+				lo = (GridLocation) j;
+				lo.setPlaceState(foo);
+			}
+		}
+	}
+
+	public GridLocation setGrid(int _type, GridLocation grid){
+		grid.setType(_type);
+		return grid;
+	}
+
+	public void setTurn(boolean turn){ this.myTurn = turn; }
+
+	public void setShipLeft(int shipLeft) { this.shipLeft = shipLeft; }
+
+	public void setSize(int size) { this.size = size; }
+
 	public void setCurrentShipType(int i) { this.currentShipType = i; }
-	
 
-	public boolean isShipVertical() {
-		return shipVertical;
-	}
+	public void setShipVertical(boolean _vertical) { this.shipVertical = _vertical; }
 
-	public void setShipVertical(boolean _vertical) {
-		this.shipVertical = _vertical;
-	}
+	public void setSalvo(boolean salvo) { this.salvo = salvo; }
 
+	public void setPlayerName(String _string){ playerName = _string; }
 
-	public boolean isSalvo() {
-		return salvo;
-	}
-
-	public void setSalvo(boolean salvo) {
-		this.salvo = salvo;
-	}
+	public String toString(){ return playerName; }
 
 
 	// initialize stages
@@ -214,6 +209,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 	private boolean myTurn;
 	private boolean shipVertical;
 	private boolean salvo;
+	private String playerName;
 	private Object cells[][];
 	private ArrayList<GridLocation> guess;
 	private PlayState currentState;
