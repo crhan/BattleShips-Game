@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 public class BattleShipsFram extends JFrame {
-	public BattleShipsFram(){
+	private BattleShipsFram(){
 		this.setTitle("Battle Ship");
 		this.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		dimensionTableSize = 300;
@@ -108,7 +108,6 @@ public class BattleShipsFram extends JFrame {
 		common.add(start);
 		common.add(quit);
 		menuBar.add(common);
-		thisFrame = this;
 		start.addActionListener(new ActionListener() {
 			
 			@Override
@@ -197,7 +196,7 @@ public class BattleShipsFram extends JFrame {
 	private static JButton comfirm;
 	private JCheckBox checkSalvoRules;
 	private JComboBox comboBoxSize;
-	private JFrame thisFrame;
+	public final static JFrame thisFrame = new BattleShipsFram();
 
 	private final static int DEFAULT_WIDTH = 800;
 	private final static int DEFAULT_HEIGHT = 600;
