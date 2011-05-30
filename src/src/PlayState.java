@@ -15,7 +15,6 @@ public abstract class PlayState {
 		}
 	}
 	
-	
 	/**
 	 * Add guess after click event
 	 * It will check if it's my turn
@@ -32,6 +31,5 @@ public abstract class PlayState {
 	 */
 	public abstract void comfirm(BattleShipTableModel model);
 	public abstract void showResult();
-	
-	
+	public abstract void button(BattleShipTableModel model);
 }

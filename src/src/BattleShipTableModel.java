@@ -33,6 +33,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 		currentShipType = 1;
 		guess = new ArrayList<GridLocation>();
 		shipVertical = false;
+		salvo = false;
 	}
 	
 	public void initGrid(){
@@ -180,6 +181,15 @@ public class BattleShipTableModel extends AbstractTableModel {
 	}
 
 
+	public boolean isSalvo() {
+		return salvo;
+	}
+
+	public void setSalvo(boolean salvo) {
+		this.salvo = salvo;
+	}
+
+
 	// initialize stages
 	public final static PlayState FIRE_STATE = new FireState();
 	public final static PlayState COMFIRM_STATE = new ComfirmState();
@@ -191,6 +201,7 @@ public class BattleShipTableModel extends AbstractTableModel {
 	private int currentShipType;
 	private boolean myTurn;
 	private boolean shipVertical;
+	private boolean salvo;
 	private Object cells[][];
 	private ArrayList<GridLocation> guess;
 	private PlayState currentState;

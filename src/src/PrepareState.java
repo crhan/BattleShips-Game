@@ -1,5 +1,7 @@
 package src;
 
+import javax.swing.JOptionPane;
+
 public class PrepareState extends PlayState {
 
 	@Override
@@ -22,11 +24,11 @@ public class PrepareState extends PlayState {
 			} catch (BattleShipCrossOverException e) {
 				e.printStackTrace();
 			}
-			if (_model.getCurrentShipType() > 5) {
-				_model.setCurrentState(BattleShipTableModel.FIRE_STATE);
-				_model.changePlayer();
-				return true;
-			}
+//			if (_model.getCurrentShipType() > 5) {
+//				_model.setCurrentState(BattleShipTableModel.FIRE_STATE);
+//				_model.changePlayer();
+//				return true;
+//			}
 		}
 		return false;
 	}
@@ -41,4 +43,18 @@ public class PrepareState extends PlayState {
 
 	}
 
+	@Override
+	public void button(BattleShipTableModel model) {
+		GridLocation _location;
+		assert(model.isMyTurn());
+		for(int i=1 ; i<=5; i++){
+			_location = model.getShip(i).getLocation();
+			if ( _location == null){
+				JOptionPane.showMessageDialog(null, "You need to place all five ships to continue");
+				return;
+			}
+		}
+		model.setCurrentState(BattleShipTableModel.FIRE_STATE);
+		model.changePlayer();
+	}
 }
