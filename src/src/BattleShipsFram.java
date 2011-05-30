@@ -3,6 +3,8 @@ package src;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -16,10 +18,10 @@ public class BattleShipsFram extends JFrame {
 		Border etched = BorderFactory.createEtchedBorder();
 
 		//initializing two tables
-		BattleShipTableModel model1 = new BattleShipTableModel(size);
-		BattleShipTableModel model2 = new BattleShipTableModel(size);
-		JTable table1 = new JTable(model1);
-		JTable table2 = new JTable(model2);
+		model1 = new BattleShipTableModel(size);
+		model2 = new BattleShipTableModel(size);
+		table1 = new JTable(model1);
+		table2 = new JTable(model2);
 		//setting the table size
 		table1.setPreferredSize(new Dimension(dimensionTableSize, dimensionTableSize));
 		table2.setPreferredSize(new Dimension(dimensionTableSize, dimensionTableSize));
@@ -72,8 +74,19 @@ public class BattleShipsFram extends JFrame {
 		status.setBackground(Color.darkGray);
 		panelInfo.add(panelMessage, BorderLayout.CENTER);
 		
-		JButton comfirm = new JButton("Comfirm");
+		comfirm = new JButton("Comfirm");
 		panelInfo.add(comfirm,BorderLayout.SOUTH);
+		comfirm.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (model1.isMyTurn())
+					model1.button(model1);
+				else
+					model2.button(model2);
+			}
+		});
+		
 
 		// Design main panel
 		panelMain.add(panelTable1, BorderLayout.WEST);
@@ -97,7 +110,6 @@ public class BattleShipsFram extends JFrame {
 				JDialog dialog = new StartGameDialog(thisFrame);
 				dialog.setLocationRelativeTo(thisFrame);
 				dialog.setVisible(true);
-				
 			}
 		});
 		quit.addActionListener(new ActionListener() {
@@ -113,20 +125,18 @@ public class BattleShipsFram extends JFrame {
 		// Adding to main Frame
 		this.add(panelMain, BorderLayout.CENTER);
 		this.setJMenuBar(menuBar);
+		this.getRootPane().setDefaultButton(comfirm);
 
 
 		pack();
-	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		EventQueue.invokeLater(new Runnable(){
-			public void run(){
-				BattleShipsFram frame = new BattleShipsFram();
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setVisible(true);
-			}
-		});
+		
+		
+		//initializing the game
+		model1.setCurrentState(BattleShipTableModel.PREPARE_STATE);
+		model2.setCurrentState(BattleShipTableModel.PREPARE_STATE);
+		model1.setTurn(true);
+		table1.addMouseListener(new BattleShipTableMouseAdapter());
+		table2.addMouseListener(new BattleShipTableMouseAdapter());
 	}
 	
 	public void changeStatus(String _string){
@@ -150,10 +160,25 @@ public class BattleShipsFram extends JFrame {
 		panelTable2, panelInfo, panelLegend, panelMessage;
 	private JTextPane status;
 	private JMenuBar menuBar;
-	
+	private BattleShipTableModel model1,model2;
+	private JTable table1, table2;
+	private static JButton comfirm;
 
 	private final static int DEFAULT_WIDTH = 800;
 	private final static int DEFAULT_HEIGHT = 600;
+	
+	class BattleShipTableMouseAdapter extends MouseAdapter{
+		public void mouseClicked(MouseEvent event) {
+			JTable table =  (JTable)event.getSource();
+			// check for mouse click, just an example
+			int col = table.columnAtPoint(event.getPoint());
+			 //TODO should be modified for your own code
+			int row = table.rowAtPoint(event.getPoint());
+			System.out.println("col:" + col + ", row:" + row);
+			BattleShipTableModel model = (BattleShipTableModel) table.getModel();
+			model.click(model, model.getGridLocate(row, col));
+		}
+	}
 	
 	/**
 	 * Internal class of {@link BattleShipsFram}
@@ -190,5 +215,16 @@ public class BattleShipsFram extends JFrame {
 			
 			setSize(250,250);
 		}
+	}
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable(){
+			public void run(){
+				BattleShipsFram frame = new BattleShipsFram();
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setVisible(true);
+				frame.getRootPane().setDefaultButton(comfirm);
+			}
+		});
 	}
 }
