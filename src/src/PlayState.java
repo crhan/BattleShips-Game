@@ -1,10 +1,18 @@
 package src;
 
 public abstract class PlayState {
-	protected BattleShipTableModel context;
+	private BattleShipTableModel context;
 	
 	public void setContext(BattleShipTableModel _context){
 		this.context = _context;
+	}
+	
+	protected BattleShipTableModel getContext(){
+		if (context.isMyTurn()){
+			return context;
+		} else {
+			return context.getAnotherPlayer();
+		}
 	}
 	
 	

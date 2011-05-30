@@ -4,9 +4,10 @@ public class ComfirmState extends PlayState {
 
 	@Override
 	public boolean click(BattleShipTableModel model, GridLocation location) {
-		if (context.isMyTurn()){
-			this.context.setCurrentState(BattleShipTableModel.FIRE_STATE);
-			return this.context.click(model, location);
+		assert(model.isMyTurn());
+		if (model.isMyTurn()){
+			model.setCurrentState(BattleShipTableModel.FIRE_STATE);
+			return model.click(model, location);
 		}
 		else
 			return false;
@@ -36,13 +37,13 @@ public class ComfirmState extends PlayState {
 			}
 		}
 		// nothing happened and change the player
-		context.changePlayer();
+		model.changePlayer();
 	}
 
 	@Override
 	public void showResult() {
-		this.context.setCurrentState(BattleShipTableModel.GAMEOVER_STATE);
-		this.context.showResult();
+		super.getContext().setCurrentState(BattleShipTableModel.GAMEOVER_STATE);
+		super.getContext().showResult();
 	}
 
 }
