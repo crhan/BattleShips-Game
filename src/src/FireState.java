@@ -11,10 +11,9 @@ public class FireState extends PlayState {
 		// or is not salvo rule and fire number less then 1
 		// then add the guess, or return false and open a dialog
 		if (model.isMyTurn()) {
-			if ((model.isSalvo() && model.getGuess().size() < model
-					.getShipLeft())
-					|| !model.isSalvo()
-					&& model.getGuess().size() < 1) {
+			if ((model.isSalvo() && 
+					model.getGuess().size() < model.getAnotherPlayer().getShipLeft()) ||
+					!model.isSalvo() && model.getGuess().size() < 1) {
 				model.addGuess(location);
 				System.out.println(model.getGuess().size());
 				model.fireTableDataChanged();
