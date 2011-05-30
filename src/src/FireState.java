@@ -46,7 +46,7 @@ public class FireState extends PlayState {
 			_model = model;
 		else
 			_model = model.getAnotherPlayer();
-		if ((_model.isSalvo() && _model.getGuess().size() <= _model
+		if ((_model.isSalvo() && _model.getGuess().size() <= _model.getAnotherPlayer()
 				.getShipLeft())
 				|| !_model.isSalvo()
 				&& _model.getGuess().size() <= 1) {
