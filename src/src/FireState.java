@@ -55,7 +55,5 @@ public class FireState extends PlayState {
 		}
 	}
 	
-	public String toString(){
-		return "FireState";
-	}
+	public String toString(){ return "" + getContext() + ":\n Firing State"; }
 }

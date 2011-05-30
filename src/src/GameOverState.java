@@ -16,18 +16,17 @@ public class GameOverState extends PlayState {
 	public void showResult() {
 		BattleShipTableModel model = super.getContext();
 		BattleShipTableModel model2 = model.getAnotherPlayer();
-		
-		
+
 		this.cleanBoard(model);
 		this.cleanBoard(model2);
-		
+
 		// check the shipLeft and mark the winner
-		if (model.getShipLeft() <=0 )
+		if (model.getShipLeft() <= 0)
 			this.setResultGrid(model, true);
-		else 
+		else
 			this.setResultGrid(model, false);
-		
-		if(model2.getShipLeft() <=0)
+
+		if (model2.getShipLeft() <= 0)
 			this.setResultGrid(model2, true);
 		else
 			this.setResultGrid(model2, false);
@@ -35,54 +34,66 @@ public class GameOverState extends PlayState {
 		model2.fireTableDataChanged();
 		model.setCurrentState(BattleShipTableModel.GAMEOVER_STATE);
 		model2.setCurrentState(BattleShipTableModel.GAMEOVER_STATE);
-		
+
 	}
-	
-	public void cleanBoard(BattleShipTableModel model){
-		for(int i=0;i<model.getSize(); i++){
-			for (int j=0; j<model.getSize(); j++){
+
+	public void cleanBoard(BattleShipTableModel model) {
+		for (int i = 0; i < model.getSize(); i++) {
+			for (int j = 0; j < model.getSize(); j++) {
 				model.getGridLocate(i, j).setType(BattleShipTableModel.SEA);
 			}
 		}
 	}
-	
-	public void setResultGrid(BattleShipTableModel model, boolean isWin){
-		int _x,_y;
+
+	public void setResultGrid(BattleShipTableModel model, boolean isWin) {
+		int _x, _y;
 		int length;
-		
-		if(isWin)
+
+		if (isWin)
 			length = win.length;
 		else
 			length = lose.length;
-		
-		for (int i=0;i<length;i++){
-			if(isWin){
+
+		for (int i = 0; i < length; i++) {
+			if (isWin) {
 				_x = win[i][0];
 				_y = win[i][1];
 			} else {
 				_x = lose[i][0];
 				_y = lose[i][1];
 			}
-				if(isWin)
-					model.getGridLocate(_x+3, _y).setType(BattleShipTableModel.WIN);
-				else
-					model.getGridLocate(_x+2, _y+2).setType(BattleShipTableModel.LOSE);
+			if (isWin)
+				model.getGridLocate(_x + 3, _y).setType(
+						BattleShipTableModel.WIN);
+			else
+				model.getGridLocate(_x + 2, _y + 2).setType(
+						BattleShipTableModel.LOSE);
 		}
 	}
-	
-	private int[][] win = {
-			{0,0},{1,0},{2,1},{3,1},{4,2},{3,3},{2,3},{1,4},{0,4},
-			{1,5},{2,6},{3,6},{4,7},{3,8},{2,8},{1,9},{0,9}
-	};
-	
-	private int[][] lose = {
-			{0,0},{1,0},{2,0},{3,0},{4,0},{5,0},{6,0},{6,1},{6,2},
-			{6,3},{6,4}
-	};
+
+	private int[][] win = { { 0, 0 }, { 1, 0 }, { 2, 1 }, { 3, 1 }, { 4, 2 },
+			{ 3, 3 }, { 2, 3 }, { 1, 4 }, { 0, 4 }, { 1, 5 }, { 2, 6 },
+			{ 3, 6 }, { 4, 7 }, { 3, 8 }, { 2, 8 }, { 1, 9 }, { 0, 9 } };
+
+	private int[][] lose = { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 3, 0 }, { 4, 0 },
+			{ 5, 0 }, { 6, 0 }, { 6, 1 }, { 6, 2 }, { 6, 3 }, { 6, 4 } };
 
 	@Override
 	public void button(BattleShipTableModel model) {
-		
+
+	}
+
+	public String toString() {
+		BattleShipTableModel _model;
+		if (super.getContext().getShipLeft() == 0) {
+			_model = super.getContext();
+		} else if (super.getContext().getShipLeft() > 0
+				&& super.getContext().getAnotherPlayer().getShipLeft() == 0)
+			_model = super.getContext().getAnotherPlayer();
+		else
+			_model = null;
+
+		return _model + " Won!";
 	}
 
 }

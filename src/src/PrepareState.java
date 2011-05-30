@@ -66,4 +66,6 @@ public class PrepareState extends PlayState {
 		_model.setCurrentState(BattleShipTableModel.FIRE_STATE);
 		_model.changePlayer();
 	}
+	
+	public String toString(){ return getContext() +":\nPrepare State"; }
 }
