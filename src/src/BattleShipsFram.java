@@ -35,7 +35,6 @@ public class BattleShipsFram extends JFrame {
 
 
 		//initializing all panels;
-		panelBanner = new JPanel();
 		panelMain = new JPanel();
 		panelTable1 = new JPanel();
 		panelTable2 = new JPanel();
@@ -110,9 +109,8 @@ public class BattleShipsFram extends JFrame {
 				
 			}
 		});
-
+		
 		// Adding to main Frame
-		this.add(panelBanner,BorderLayout.NORTH);
 		this.add(panelMain, BorderLayout.CENTER);
 		this.setJMenuBar(menuBar);
 
@@ -129,7 +127,6 @@ public class BattleShipsFram extends JFrame {
 				frame.setVisible(true);
 			}
 		});
-
 	}
 	
 	public void changeStatus(String _string){
@@ -149,7 +146,7 @@ public class BattleShipsFram extends JFrame {
 	
 	private int size=10;
 	private int dimensionTableSize;
-	private JPanel panelBanner, panelMain, panelTable1,
+	private JPanel panelMain, panelTable1,
 		panelTable2, panelInfo, panelLegend, panelMessage;
 	private JTextPane status;
 	private JMenuBar menuBar;
@@ -158,8 +155,13 @@ public class BattleShipsFram extends JFrame {
 	private final static int DEFAULT_WIDTH = 800;
 	private final static int DEFAULT_HEIGHT = 600;
 	
-	// Internal class
+	/**
+	 * Internal class of {@link BattleShipsFram}
+	 */
 	class StartGameDialog extends JDialog{
+		/**
+		 * @param owner: parent Frame
+		 */
 		public StartGameDialog(JFrame owner){
 			super(owner,"Start Game", true);
 			
