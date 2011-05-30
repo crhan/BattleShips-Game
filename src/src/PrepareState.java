@@ -45,16 +45,25 @@ public class PrepareState extends PlayState {
 
 	@Override
 	public void button(BattleShipTableModel model) {
+		//get the active model
+		BattleShipTableModel _model;
+		if (model.isMyTurn())
+			_model = model;
+		else
+			_model = model.getAnotherPlayer();
 		GridLocation _location;
-		assert(model.isMyTurn());
+		
+		assert(_model.isMyTurn());
 		for(int i=1 ; i<=5; i++){
-			_location = model.getShip(i).getLocation();
+			_location = _model.getShip(i).getLocation();
 			if ( _location == null){
 				JOptionPane.showMessageDialog(null, "You need to place all five ships to continue");
 				return;
 			}
 		}
-		model.setCurrentState(BattleShipTableModel.FIRE_STATE);
-		model.changePlayer();
+		_model.setShipPlaceState(false);
+		_model.fireTableDataChanged();
+		_model.setCurrentState(BattleShipTableModel.FIRE_STATE);
+		_model.changePlayer();
 	}
 }

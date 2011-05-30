@@ -62,6 +62,16 @@ public class BattleShipTableModel extends AbstractTableModel {
 		return g.getColor();
 	}
 	
+	public void setShipPlaceState(boolean foo){
+		GridLocation lo;
+		for (Object[] i:cells){
+			for (Object j:i){
+				lo = (GridLocation) j;
+				lo.setPlaceState(foo);
+			}
+		}
+	}
+	
 	public boolean inBounds(int x, int y){
 		if ( x >= size || y>=size){
 			return false;
@@ -149,6 +159,8 @@ public class BattleShipTableModel extends AbstractTableModel {
 	public void comfirm(BattleShipTableModel model){ this.currentState.comfirm(model); }
 	
 	public void showResult(){ this.currentState.showResult(); }
+	
+	public void button(BattleShipTableModel model){ this.currentState.button(model);}
 	
 	public void changePlayer(){
 		this.getAnotherPlayer().setTurn(this.myTurn);

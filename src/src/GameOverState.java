@@ -31,6 +31,10 @@ public class GameOverState extends PlayState {
 			this.setResultGrid(model2, true);
 		else
 			this.setResultGrid(model2, false);
+		model.fireTableDataChanged();
+		model2.fireTableDataChanged();
+		model.setCurrentState(BattleShipTableModel.GAMEOVER_STATE);
+		model2.setCurrentState(BattleShipTableModel.GAMEOVER_STATE);
 		
 	}
 	

@@ -39,6 +39,7 @@ public class ComfirmState extends PlayState {
 			}
 		}
 		// nothing happened and change the player
+		model.fireTableDataChanged();
 		model.getGuess().clear();
 		model.changePlayer();
 	}
