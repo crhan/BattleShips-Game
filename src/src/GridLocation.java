@@ -35,6 +35,7 @@ public class GridLocation implements Cloneable{
 		case BattleShipTableModel.AIRCRAFT_CARRIER:
 			if (this.placeState)
 				return Color.green;
+			//TODO watch out here
 			else
 				return Color.blue;
 		}
@@ -61,7 +62,7 @@ public class GridLocation implements Cloneable{
 	public int getY() {
 		return y;
 	}
-	
+	//PlaceState is use to determine if the ship will be seen
 	public void setPlaceState(boolean foo){
 		this.placeState = foo;
 	}
