@@ -208,7 +208,6 @@ public class BattleShipsFram extends JFrame {
 			// check for mouse click, just an example
 			int col = table.columnAtPoint(event.getPoint());
 			int row = table.rowAtPoint(event.getPoint());
-			System.out.println("col:" + col + ", row:" + row);
 			BattleShipTableModel model = (BattleShipTableModel) table.getModel();
 			model.click(model, model.getGridLocate(row, col));
 		}

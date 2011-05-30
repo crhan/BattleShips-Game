@@ -16,7 +16,6 @@ public class FireState extends PlayState {
 					|| !model.isSalvo()
 					&& model.getGuess().size() < 1) {
 				model.addGuess(location);
-				System.out.println(model.getGuess().size());
 				model.fireTableDataChanged();
 				return true;
 			} else {
