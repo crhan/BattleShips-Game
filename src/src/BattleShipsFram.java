@@ -134,7 +134,6 @@ public class BattleShipsFram extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO 增加开始dialog,选择salvo rules和选择size
 				JDialog dialog = new StartGameDialog(thisFrame);
 				dialog.setLocationRelativeTo(thisFrame);
 				dialog.setVisible(true);
